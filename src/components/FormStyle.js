@@ -35,16 +35,21 @@ export const FormGroup = styled.div`
 
 export const Label = styled.label`
   margin-bottom: 5px;
-  color: gray;
+  color: black;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input.attrs((props) => ({
+  focused: props.focused,
+}))`
   padding: 10px;
   border-radius: 5px;
   border: 1px solid gray;
   color: darkgray;
-  :invalid[foc="true"] ~ span {
+  :invalid[data-focused="true"] ~ span {
     display: block;
+  }
+  :invalid[data-focused="true"] {
+    border: 1px solid red;
   }
 `;
 

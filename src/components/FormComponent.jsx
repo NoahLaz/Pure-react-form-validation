@@ -3,15 +3,14 @@ import {
   Header,
   Form,
   FormGroup,
-  Input,
   Error,
   Button,
   Label,
 } from "./FormStyle";
 import { useState } from "react";
+import FormInput from "./FormInput";
 
 const FormComponent = () => {
-  const [focused, setFocused] = useState("false");
   const [formValues, setFormValues] = useState({
     username: "",
     email: "",
@@ -30,7 +29,6 @@ const FormComponent = () => {
         "Username should be 6-16 characters and shouldn't include any special characters",
       pattern: "^[A-Za-z0-9]{3,16}$",
       required: true,
-      focused: "false",
     },
     {
       id: 2,
@@ -40,7 +38,6 @@ const FormComponent = () => {
       label: "Email",
       errorMessage: "This field should be a valid email address",
       required: true,
-      focused: "false",
     },
     {
       id: 3,
@@ -52,7 +49,6 @@ const FormComponent = () => {
         "Password should be 8-20 characters, and must include at least  1 letter, 1 number and 1 special character",
       pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       required: true,
-      focused: "false",
     },
     {
       id: 4,
@@ -63,15 +59,11 @@ const FormComponent = () => {
       errorMessage: "Passwords should match",
       pattern: formValues.password,
       required: true,
-      focused: "false",
     },
   ];
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
-  const handleFocus = () => {
-    setFocused("true");
   };
 
   return (
@@ -81,11 +73,10 @@ const FormComponent = () => {
         {formInputs.map((input) => (
           <FormGroup key={input.id}>
             <Label>{input.label}</Label>
-            <Input
-              {...input}
-              value={formValues[input.name]}
-              onChange={handleChange}
-              onBlur={handleFocus}
+            <FormInput
+              input={input}
+              formValues={formValues}
+              handleChange={handleChange}
             />
             <Error>{input.errorMessage}</Error>
           </FormGroup>
